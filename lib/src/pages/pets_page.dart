@@ -40,7 +40,7 @@ class PetsPage extends StatelessWidget {
                       (index) => Column(
                         children: [
                           InkWell(
-                            onTap: () => Navigator.pushNamed(context, "pet"),
+                            onTap: () => Navigator.pushNamed(context, "/pet"),
                             child: CircleAvatar(
                               radius: 57,
                               backgroundColor: ColorTheme.primary,
