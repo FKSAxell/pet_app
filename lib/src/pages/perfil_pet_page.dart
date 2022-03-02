@@ -7,6 +7,8 @@ class PerfilPetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    print(arguments);
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -25,9 +27,12 @@ class PerfilPetPage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
             ),
-            CircleAvatar(
-              radius: 80,
-              backgroundColor: ColorTheme.primary,
+            Hero(
+              tag: arguments["key"],
+              child: CircleAvatar(
+                radius: 80,
+                backgroundColor: ColorTheme.primary,
+              ),
             ),
             SizedBox(
               height: 8,

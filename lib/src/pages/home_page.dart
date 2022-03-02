@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/src/modals/add_mascota_modal.dart';
+import 'package:pet_app/src/models/mascota_model.dart';
 import 'package:pet_app/src/pages/blank_page.dart';
 import 'package:pet_app/src/pages/pets_page.dart';
 import 'package:pet_app/src/theme/color_theme.dart';
+import 'package:pet_app/src/utils/show_dialog.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,8 +15,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final uuid = Uuid();
   int opcion = 1;
   PageController pageCtrl = PageController(initialPage: 1);
+  late List<Mascota> mascotas;
+
+  @override
+  void initState() {
+    super.initState();
+    //TODO: CONSULTAR LAS MASCOTAS
+    mascotas = [
+      Mascota(
+        id: Uuid().v1(),
+        nombre: "Cosmo",
+        fechaNacimiento: DateTime(2020, 2, 30),
+        sexo: "M",
+        peso: "20.2",
+      ),
+      Mascota(
+        id: Uuid().v1(),
+        nombre: "Wanda",
+        fechaNacimiento: DateTime(2020, 2, 30),
+        sexo: "M",
+        peso: "20.2",
+      ),
+      Mascota(
+        id: Uuid().v1(),
+        nombre: "Lili",
+        fechaNacimiento: DateTime(2020, 2, 30),
+        sexo: "M",
+        peso: "20.2",
+      ),
+    ];
+  }
+
+  void agregarMascota(Mascota mascota) {
+    //TODO: POST MASCOTAS Y UPDATE LISTA MASCOTAS
+    mascotas = [...mascotas, mascota];
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +79,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: Drawer(),
       body: PageView(
+        physics: BouncingScrollPhysics(),
         controller: pageCtrl,
         onPageChanged: (int index) => setState(
           () {
@@ -46,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         ),
         children: [
           BlankPage(),
-          PetsPage(),
+          PetsPage(mascotas: mascotas),
           BlankPage(),
         ],
       ),
@@ -62,13 +104,15 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: (opcion == 1)
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: () =>
+                  customShowDialog(context, AddMascota(onAdd: agregarMascota)),
               child: Icon(Icons.add),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+                borderRadius: BorderRadius.circular(8),
+              ),
               backgroundColor: ColorTheme.primary,
             )
-          : Container(),
+          : null,
     );
   }
 }
