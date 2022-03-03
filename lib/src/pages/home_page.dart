@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/src/modals/add_mascota_modal.dart';
 import 'package:pet_app/src/models/mascota_model.dart';
-import 'package:pet_app/src/pages/blank_page.dart';
+import 'package:pet_app/src/pages/veterinarias_page.dart';
 import 'package:pet_app/src/pages/pets_page.dart';
 import 'package:pet_app/src/theme/color_theme.dart';
 import 'package:pet_app/src/utils/show_dialog.dart';
@@ -87,9 +87,9 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         children: [
-          BlankPage(),
+          VeterinariasPage(),
           PetsPage(mascotas: mascotas),
-          BlankPage(),
+          VeterinariasPage(),
         ],
       ),
       bottomNavigationBar: CustomNavigationBar(
