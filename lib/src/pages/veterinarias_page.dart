@@ -98,7 +98,7 @@ class VeterinariasPage extends StatelessWidget {
           //   ],
           // ),
           FutureBuilder<List<Place>>(
-              future: PlacesServices.getPlaces(),
+              future: PlacesServices.getPlacesVet(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<Place> data = snapshot.data!;
