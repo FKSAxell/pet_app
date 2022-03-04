@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/src/modals/add_mascota_modal.dart';
 import 'package:pet_app/src/models/mascota_model.dart';
+import 'package:pet_app/src/models/vacuna_model.dart';
 import 'package:pet_app/src/pages/lugares_page.dart';
 import 'package:pet_app/src/pages/veterinarias_page.dart';
 import 'package:pet_app/src/pages/pets_page.dart';
@@ -27,12 +28,20 @@ class _HomePageState extends State<HomePage> {
     //TODO: CONSULTAR LAS MASCOTAS
     mascotas = [
       Mascota(
-        id: Uuid().v1(),
-        nombre: "Cosmo",
-        fechaNacimiento: DateTime(2020, 2, 30),
-        sexo: "M",
-        peso: "20.2",
-      ),
+          id: Uuid().v1(),
+          nombre: "Cosmo",
+          fechaNacimiento: DateTime(2020, 2, 30),
+          sexo: "M",
+          peso: "20.2",
+          vacuna: [
+            Vacuna(
+              id: Uuid().v1(),
+              nombre: "Rabia",
+              descripcion:
+                  "Voluptate deserunt fugiat nisi aute magna velit id culpa dolore esse magna nulla ullamco.",
+              fecha: DateTime(2020, 2, 30),
+            ),
+          ]),
       Mascota(
         id: Uuid().v1(),
         nombre: "Wanda",

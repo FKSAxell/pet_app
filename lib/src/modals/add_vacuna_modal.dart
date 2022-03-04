@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/src/models/mascota_model.dart';
+import 'package:pet_app/src/models/vacuna_model.dart';
 import 'package:pet_app/src/theme/color_theme.dart';
 import 'package:pet_app/src/widgets/custom_button.dart';
 import 'package:pet_app/src/widgets/custom_input.dart';
 import 'package:uuid/uuid.dart';
 
-class AddMascota extends StatefulWidget {
+class AddVacuna extends StatefulWidget {
   final Function onAdd;
-  const AddMascota({
-    Key? key,
-    required this.onAdd,
-  }) : super(key: key);
+  final Mascota mascota;
+  const AddVacuna({Key? key, required this.onAdd, required this.mascota})
+      : super(key: key);
 
   @override
-  State<AddMascota> createState() => _AddMascotaState();
+  State<AddVacuna> createState() => _AddVacunaState();
 }
 
-class _AddMascotaState extends State<AddMascota> {
-  String sexo = "M";
-  String nombre = "";
-  String peso = "";
+class _AddVacunaState extends State<AddVacuna> {
+  String vacuna = "";
+  String descripcion = "";
   DateTime selectedDate = DateTime.now();
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -47,7 +46,7 @@ class _AddMascotaState extends State<AddMascota> {
             child: Row(
               children: [
                 SizedBox(width: 10),
-                Text("Añadir Mascota"),
+                Text("Añadir Vacuna"),
                 Spacer(),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -60,13 +59,13 @@ class _AddMascotaState extends State<AddMascota> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Nombre"),
+              Text("Vacuna"),
               CustomInput(
                 hint: "",
-                label: "Nombre",
+                label: "Vacuna",
                 keyboardType: TextInputType.name,
                 onChanged: (value) {
-                  nombre = value;
+                  vacuna = value;
                   setState(() {});
                 },
               ),
@@ -81,41 +80,13 @@ class _AddMascotaState extends State<AddMascota> {
                   enabled: false,
                 ),
               ),
-              Text("Sexo"),
-              Row(
-                children: [
-                  ChoiceChip(
-                    selectedColor: ColorTheme.female,
-                    labelStyle: TextStyle(color: Colors.white),
-                    label: Text("F"),
-                    selected: sexo == "F",
-                    shape: CircleBorder(),
-                    onSelected: (isSelect) {
-                      if (isSelect) sexo = "F";
-                      setState(() {});
-                    },
-                  ),
-                  ChoiceChip(
-                    selectedColor: ColorTheme.male,
-                    labelStyle: TextStyle(color: Colors.white),
-                    label: Text("M"),
-                    selected: sexo == "M",
-                    shape: CircleBorder(),
-                    onSelected: (isSelect) {
-                      if (isSelect) sexo = "M";
-                      setState(() {});
-                    },
-                  ),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
-              Text("Peso"),
+              Text("Descripción"),
               CustomInput(
                 hint: "",
-                label: "Peso",
-                keyboardType: TextInputType.number,
+                label: "Descripción",
+                keyboardType: TextInputType.multiline,
                 onChanged: (value) {
-                  peso = value;
+                  descripcion = value;
                   setState(() {});
                 },
               ),
@@ -124,13 +95,12 @@ class _AddMascotaState extends State<AddMascota> {
                   text: "Agregar",
                   onPressed: () {
                     widget.onAdd(
-                      Mascota(
-                        id: Uuid().v1(),
-                        nombre: nombre,
-                        fechaNacimiento: selectedDate,
-                        sexo: sexo,
-                        peso: peso,
-                      ),
+                      Vacuna(
+                          id: Uuid().v1(),
+                          nombre: vacuna,
+                          descripcion: descripcion,
+                          fecha: selectedDate),
+                      widget.mascota,
                     );
                     Navigator.of(context).pop();
                   },

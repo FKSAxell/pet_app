@@ -40,14 +40,16 @@ class PetsPage extends StatelessWidget {
                       spacing: 40,
                       alignment: WrapAlignment.center,
                       children: mascotas
-                          .map((e) => Column(
+                          .map((mascota) => Column(
                                 children: [
                                   InkWell(
                                     onTap: () => Navigator.pushNamed(
-                                        context, "/pet",
-                                        arguments: {"key": e.id}),
+                                      context,
+                                      "/pet",
+                                      arguments: {"mascota": mascota},
+                                    ),
                                     child: Hero(
-                                      tag: e.id,
+                                      tag: mascota.id,
                                       child: CircleAvatar(
                                         radius: 57,
                                         backgroundColor: ColorTheme.primary,
@@ -55,7 +57,7 @@ class PetsPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "${e.nombre}",
+                                    "${mascota.nombre}",
                                     style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,

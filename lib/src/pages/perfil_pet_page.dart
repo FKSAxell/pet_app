@@ -1,26 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/src/modals/add_vacuna_modal.dart';
+import 'package:pet_app/src/models/mascota_model.dart';
+import 'package:pet_app/src/models/vacuna_model.dart';
 import 'package:pet_app/src/theme/color_theme.dart';
+import 'package:pet_app/src/utils/calculate.dart';
+import 'package:pet_app/src/utils/show_dialog.dart';
+import 'package:uuid/uuid.dart';
 
-class PerfilPetPage extends StatelessWidget {
+class PerfilPetPage extends StatefulWidget {
   const PerfilPetPage({Key? key}) : super(key: key);
+
+  @override
+  State<PerfilPetPage> createState() => _PerfilPetPageState();
+}
+
+class _PerfilPetPageState extends State<PerfilPetPage> {
+  void agregarVacuna(Vacuna vacuna, Mascota mascota) {
+    //TODO: POST VACUNA
+    mascota.vacuna = [...mascota.vacuna ?? [], vacuna];
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as Map;
-    print(arguments);
+    final Mascota mascota = arguments["mascota"];
+    final List<Vacuna> vacunas = mascota.vacuna ?? [];
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Text(
-            "Perfil Cosmo",
+            "Perfil ${mascota.nombre}",
             style: GoogleFonts.poppins(
                 color: ColorTheme.primary, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           iconTheme: IconThemeData(color: ColorTheme.primary),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => customShowDialog(
+              context, AddVacuna(mascota: mascota, onAdd: agregarVacuna)),
+          child: Icon(Icons.add),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          backgroundColor: ColorTheme.primary,
         ),
         body: Column(
           children: [
@@ -28,7 +56,7 @@ class PerfilPetPage extends StatelessWidget {
               width: double.infinity,
             ),
             Hero(
-              tag: arguments["key"],
+              tag: mascota.id,
               child: CircleAvatar(
                 radius: 80,
                 backgroundColor: ColorTheme.primary,
@@ -38,7 +66,7 @@ class PerfilPetPage extends StatelessWidget {
               height: 8,
             ),
             Text(
-              "Cosmo",
+              mascota.nombre,
               style: GoogleFonts.poppins(
                 color: ColorTheme.primary,
                 fontWeight: FontWeight.w500,
@@ -67,35 +95,45 @@ class PerfilPetPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _DatosPet(
-                          cantidad: "3",
+                          cantidad: "${calculateAge(mascota.fechaNacimiento)}",
                           mensaje: "años",
                           title: "Edad",
                         ),
                         _DatosPet(
-                          cantidad: "25",
+                          cantidad: mascota.peso,
                           mensaje: "kg",
                           title: "Peso",
                         ),
                         _DatosPet(
-                          mensaje: "M",
+                          mensaje: mascota.sexo,
                           title: "Sexo",
                         ),
                       ],
                     ),
-                    // ExpansionPanelList(
-                    //   elevation: 0,
-                    //   children: [
-                    //     ExpansionPanel(
-                    //       isExpanded: false,
-                    //       headerBuilder: (context, isExpanded) => ListTile(
-                    //         title: Text(
-                    //           "Rabia",
-                    //         ),
-                    //       ),
-                    //       body: Container(),
-                    //     )
-                    //   ],
-                    // )
+                    Expanded(
+                      child: ListView(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          physics: BouncingScrollPhysics(),
+                          children: vacunas
+                              .map(
+                                (e) => ExpansionTile(
+                                  title: Text(e.nombre),
+                                  subtitle: Text(
+                                      "${e.fecha.day}/${e.fecha.month}/${e.fecha.year}"),
+                                  leading: Icon(FontAwesomeIcons.bacteria),
+                                  iconColor: ColorTheme.primary,
+                                  textColor: ColorTheme.primary,
+                                  children: [
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 70),
+                                      child: Text(e.descripcion),
+                                    )
+                                  ],
+                                ),
+                              )
+                              .toList()),
+                    )
                   ],
                 ),
               ),
