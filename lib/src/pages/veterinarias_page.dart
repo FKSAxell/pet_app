@@ -107,96 +107,104 @@ class VeterinariasPage extends StatelessWidget {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           Place place = data[index];
-                          return ExpansionTile(
-                            title: Text(
-                              place.name,
-                              overflow: TextOverflow.ellipsis,
+                          return Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.black.withOpacity(0.1)),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            subtitle: Text(
-                                "${place.schedule.ini} - ${place.schedule.end}"),
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                place.image,
-                                height: 40,
-                                width: 40,
-                                fit: BoxFit.cover,
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: ExpansionTile(
+                              title: Text(
+                                place.name,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-
-                            // Container(
-                            //     decoration: BoxDecoration(
-                            //       color: ColorTheme.primary,
-                            //       borderRadius: BorderRadius.circular(8),
-                            //     ),
-                            //     child: Image.network(
-                            //       place.image,
-                            //       fit: BoxFit.cover,
-                            //     ),
-                            //     width: 40,
-                            //     height: 40,
-                            //   ),
-
-                            children: [
-                              Container(
-                                height: 40,
-                                margin: EdgeInsets.symmetric(vertical: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      splashRadius: 25,
-                                      onPressed: () async {
-                                        final latitude = place.location.lat;
-                                        final longitude = place.location.lng;
-                                        final url =
-                                            "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-                                        if (await canLaunch(url))
-                                          await launch(url);
-                                      },
-                                      icon: Icon(
-                                        Icons.location_on_outlined,
-                                        color: ColorTheme.primary,
-                                        size: 32,
-                                      ),
-                                    ),
-                                    VerticalDivider(
-                                      thickness: 2,
-                                    ),
-                                    IconButton(
-                                      splashRadius: 25,
-                                      onPressed: () async {
-                                        final tel = "tel:${place.callphone}";
-                                        if (await canLaunch(tel))
-                                          await launch(tel);
-                                      },
-                                      icon: Icon(
-                                        Icons.phone,
-                                        color: ColorTheme.primary,
-                                        size: 32,
-                                      ),
-                                    ),
-                                    VerticalDivider(
-                                      thickness: 2,
-                                    ),
-                                    IconButton(
-                                      splashRadius: 25,
-                                      onPressed: () async {
-                                        final wapp =
-                                            "https://wa.me/${place.wsphone}";
-                                        if (await canLaunch(wapp))
-                                          await launch(wapp);
-                                      },
-                                      icon: Icon(
-                                        FontAwesomeIcons.whatsapp,
-                                        color: ColorTheme.primary,
-                                        size: 32,
-                                      ),
-                                    ),
-                                  ],
+                              subtitle: Text(
+                                  "${place.schedule.ini} - ${place.schedule.end}"),
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  place.image,
+                                  height: 40,
+                                  width: 40,
+                                  fit: BoxFit.cover,
                                 ),
-                              )
-                            ],
+                              ),
+
+                              // Container(
+                              //     decoration: BoxDecoration(
+                              //       color: ColorTheme.primary,
+                              //       borderRadius: BorderRadius.circular(8),
+                              //     ),
+                              //     child: Image.network(
+                              //       place.image,
+                              //       fit: BoxFit.cover,
+                              //     ),
+                              //     width: 40,
+                              //     height: 40,
+                              //   ),
+
+                              children: [
+                                Container(
+                                  height: 40,
+                                  margin: EdgeInsets.symmetric(vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        splashRadius: 25,
+                                        onPressed: () async {
+                                          final latitude = place.location.lat;
+                                          final longitude = place.location.lng;
+                                          final url =
+                                              "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
+                                          if (await canLaunch(url))
+                                            await launch(url);
+                                        },
+                                        icon: Icon(
+                                          Icons.location_on_outlined,
+                                          color: ColorTheme.primary,
+                                          size: 32,
+                                        ),
+                                      ),
+                                      VerticalDivider(
+                                        thickness: 2,
+                                      ),
+                                      IconButton(
+                                        splashRadius: 25,
+                                        onPressed: () async {
+                                          final tel = "tel:${place.callphone}";
+                                          if (await canLaunch(tel))
+                                            await launch(tel);
+                                        },
+                                        icon: Icon(
+                                          Icons.phone,
+                                          color: ColorTheme.primary,
+                                          size: 32,
+                                        ),
+                                      ),
+                                      VerticalDivider(
+                                        thickness: 2,
+                                      ),
+                                      IconButton(
+                                        splashRadius: 25,
+                                        onPressed: () async {
+                                          final wapp =
+                                              "https://wa.me/${place.wsphone}";
+                                          if (await canLaunch(wapp))
+                                            await launch(wapp);
+                                        },
+                                        icon: Icon(
+                                          FontAwesomeIcons.whatsapp,
+                                          color: ColorTheme.primary,
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           );
                         }),
                   );
