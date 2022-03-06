@@ -82,7 +82,7 @@ class _Parques extends StatelessWidget {
                               place.image,
                               height: 40,
                               width: 40,
-                              fit: BoxFit.fitWidth,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           title: Text(place.name),
